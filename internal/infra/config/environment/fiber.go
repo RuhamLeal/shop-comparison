@@ -14,30 +14,18 @@ type Fiber struct {
 }
 
 func NewFiberConfig() *Fiber {
-	host := services.GetEnvironmentVariable("HOST", false)
-	portEnv := services.GetEnvironmentVariable("APP_PORT", false)
+	host := services.GetEnvironmentVariable("FIBER_HOST", false)
+	portEnv := services.GetEnvironmentVariable("FIBER_PORT", false)
 
 	port, err := strconv.Atoi(portEnv)
 
 	if err != nil {
-		panic(fmt.Sprintf("Invalid value for 'APP_PORT' env, value: %s", portEnv))
+		panic(fmt.Sprintf("Invalid value for 'FIBER_PORT' env, value: %s", portEnv))
 	}
 
-	appDebugEnv := services.GetEnvironmentVariable("APP_DEBUG", false)
+	debug := services.GetEnvironmentVariableAsBool("FIBER_DEBUG", false)
 
-	debug, err := strconv.ParseBool(appDebugEnv)
-
-	if err != nil {
-		panic(fmt.Sprintf("Invalid value for 'APP_DEBUG' env, value: %s", appDebugEnv))
-	}
-
-	preforkEnv := services.GetEnvironmentVariable("FIBER_PREFORK", false)
-
-	prefork, err := strconv.ParseBool(preforkEnv)
-
-	if err != nil {
-		panic(fmt.Sprintf("invalid 'FIBER_PREFORK' env value: %s", preforkEnv))
-	}
+	prefork := services.GetEnvironmentVariableAsBool("FIBER_PREFORK", false)
 
 	return &Fiber{
 		Host:    host,
