@@ -1,1 +1,10 @@
 result.xml
+
+/build
+/tmp
+/docs
+
+
+internal/infra/sqlite/base.db
+
+.env
