@@ -1,0 +1,15 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "internal/infra/sqlite/queries"
+    schema: "internal/infra/sqlite/migrations"
+    gen:
+      go:
+        out: "internal/infra/sqlite"
+        package: "sqlite"
+        emit_db_tags: true
+        overrides:
+          - db_type: "decimal"
+            go_type:
+              import: "github.com/shopspring/decimal"
+              type: "Decimal"
