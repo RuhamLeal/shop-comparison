@@ -3,13 +3,18 @@ package constants
 import . "project/internal/domain/types"
 
 const (
-	UnknownError             RepositoryErrorReason = "unknown_error"
-	ApplicationError         RepositoryErrorReason = "application_error"
-	NotFoundError            RepositoryErrorReason = "not_found_error"
-	ForeignKeyViolationError RepositoryErrorReason = "foreign_key_violation_error"
-	UniqueConstraintError    RepositoryErrorReason = "unique_constraint_error"
-	IndexError               RepositoryErrorReason = "index_error"
-	QuerySyntaxError         RepositoryErrorReason = "query_syntax_error"
-	TransactionError         RepositoryErrorReason = "transaction_error"
-	TimeoutError             RepositoryErrorReason = "timeout_error"
+	RepositoryUnknownError             RepositoryErrorReason = "unknown_error"
+	RepositoryApplicationError         RepositoryErrorReason = "application_error"
+	RepositoryNotFoundError            RepositoryErrorReason = "not_found_error"
+	RepositoryForeignKeyViolationError RepositoryErrorReason = "foreign_key_violation_error"
+	RepositoryUniqueConstraintError    RepositoryErrorReason = "unique_constraint_error"
+	RepositoryIndexError               RepositoryErrorReason = "index_error"
+	RepositoryQuerySyntaxError         RepositoryErrorReason = "query_syntax_error"
+	RepositoryTransactionError         RepositoryErrorReason = "transaction_error"
+	RepositoryTimeoutError             RepositoryErrorReason = "timeout_error"
+)
+
+const (
+	DefaultRepositoryStackSkip   StackSkip   = 3
+	DefaultRepositoryStackLength StackLength = 10
 )

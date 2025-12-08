@@ -7,11 +7,6 @@ import (
 	. "project/internal/domain/types"
 )
 
-const (
-	defaultRepositoryStackSkip   StackSkip   = 3
-	defaultRepositoryStackLength StackLength = 10
-)
-
 type RepositoryException interface {
 	Base[BaseRepository]
 }
@@ -34,18 +29,18 @@ func Repo(err error, opts ...RepositoryOpts) RepositoryException {
 
 	var stack Stack
 	if err == nil {
-		stack = getStack(defaultRepositoryStackSkip, defaultRepositoryStackLength-2)
+		stack = getStack(constants.DefaultRepositoryStackSkip, constants.DefaultRepositoryStackLength-2)
 		return &BaseRepository{
-			Reason: constants.UnknownError,
+			Reason: constants.RepositoryUnknownError,
 			Err:    "-",
 			Stack:  stack,
 		}
 	}
 
 	if len(opts) == 0 {
-		stack = getStack(defaultRepositoryStackSkip, defaultRepositoryStackLength)
+		stack = getStack(constants.DefaultRepositoryStackSkip, constants.DefaultRepositoryStackLength)
 		return &BaseRepository{
-			Reason: constants.UnknownError,
+			Reason: constants.RepositoryUnknownError,
 			Err:    ExceptionErr(err.Error()),
 			Stack:  stack,
 		}
@@ -56,10 +51,10 @@ func Repo(err error, opts ...RepositoryOpts) RepositoryException {
 	stackLen := opt.StackLength
 
 	if stackLen == 0 {
-		stackLen = defaultRepositoryStackLength
+		stackLen = constants.DefaultRepositoryStackLength
 	}
 
-	stack = getStack(defaultRepositoryStackSkip, stackLen)
+	stack = getStack(constants.DefaultRepositoryStackSkip, stackLen)
 
 	return &BaseRepository{
 		Reason: opt.Reason,
