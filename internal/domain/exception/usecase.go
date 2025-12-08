@@ -37,7 +37,7 @@ func Usecase(err error, opts ...UsecaseOpts) UsecaseException {
 		stack = getStack(constants.DefaultUsecaseStackSkip, constants.DefaultUsecaseStackLength-2)
 		return &BaseUsecase{
 			Code:       "#0",
-			StatusCode: constants.InternalErrorCode,
+			StatusCode: constants.UsecaseErrorCode,
 			Message:    "Internal Error - Inexistent",
 			Err:        "-",
 			Stack:      stack,
@@ -48,7 +48,7 @@ func Usecase(err error, opts ...UsecaseOpts) UsecaseException {
 		stack = getStack(constants.DefaultUsecaseStackSkip, constants.DefaultUsecaseStackLength-1)
 		return &BaseUsecase{
 			Code:       "#0",
-			StatusCode: constants.InternalErrorCode,
+			StatusCode: constants.UsecaseErrorCode,
 			Message:    "Internal Error - Unknown",
 			Err:        ExceptionErr(err.Error()),
 			Stack:      stack,
@@ -69,7 +69,7 @@ func Usecase(err error, opts ...UsecaseOpts) UsecaseException {
 
 	var status int = opt.StatusCode
 	if status == 0 {
-		status = constants.InternalErrorCode
+		status = constants.UsecaseErrorCode
 	}
 
 	var stackLen StackLength = opt.StackLength
