@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-type Base[T BaseRepository | BaseUsecase] interface {
+type Base[T BaseRepository | BaseUsecase | BaseEntity] interface {
 	error
 	Instance() *T
 	indentStack(StackIndentSpaces) Stack
