@@ -1,5 +1,11 @@
 package entity
 
+import (
+	"errors"
+	"project/internal/domain/constants"
+	exceptions "project/internal/domain/exception"
+)
+
 type Product struct {
 	ID          int64
 	Name        string
@@ -16,12 +22,42 @@ type ProductProps struct {
 	Rating      int8
 }
 
-func NewProduct(props ProductProps) Product {
-	return Product{
+func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
+	product := &Product{
 		ID:          props.ID,
 		Name:        props.Name,
 		Description: props.Description,
 		Price:       props.Price,
 		Rating:      props.Rating,
 	}
+
+	err := product.validate()
+
+	if err != nil {
+		return nil, exceptions.Entity(err, exceptions.EntityOpts{
+			Reason: constants.EntityValidationError,
+		})
+	}
+
+	return product, nil
+}
+
+func (p *Product) validate() error {
+	if p.ID < 0 {
+		return errors.New("ID field cannot be less than 0")
+	}
+
+	if p.Name == "" {
+		return errors.New("Name cannot be empty")
+	}
+
+	if len(p.Name) > 255 {
+		return errors.New("Name cannot be longer than 255 characters")
+	}
+
+	if len(p.Description) > 2000 {
+		return errors.New("Description cannot be longer than 2000 characters")
+	}
+
+	return nil
 }
