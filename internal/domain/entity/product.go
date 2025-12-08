@@ -52,6 +52,10 @@ func (p *Product) validate() error {
 		return errors.New("ID field cannot be less than 0")
 	}
 
+	if p.CategoryID < 0 {
+		return errors.New("CategoryID field cannot be less than 0")
+	}
+
 	if p.Name == "" {
 		return errors.New("Name cannot be empty")
 	}
