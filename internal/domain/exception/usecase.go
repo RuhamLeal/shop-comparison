@@ -2,7 +2,8 @@ package exceptions
 
 import (
 	"fmt"
-	"project/internal/constants"
+
+	"project/internal/domain/constants"
 	. "project/internal/domain/types"
 )
 
