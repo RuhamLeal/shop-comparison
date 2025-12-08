@@ -8,6 +8,7 @@ import (
 
 type Product struct {
 	ID                  int64
+	CategoryID          int64
 	Name                string
 	Description         string
 	Price               int64 // in cents R$ 5.012,00 -> 5012
@@ -17,6 +18,7 @@ type Product struct {
 
 type ProductProps struct {
 	ID                  int64
+	CategoryID          int64
 	Name                string
 	Description         string
 	Price               int64
@@ -67,4 +69,8 @@ func (p *Product) validate() error {
 	}
 
 	return nil
+}
+
+func (p *Product) HasSpecificationGroups() bool {
+	return len(p.SpecificationGroups) > 0
 }
