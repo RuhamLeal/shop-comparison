@@ -34,6 +34,7 @@ func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 		Price:               props.Price,
 		Rating:              props.Rating,
 		SpecificationGroups: props.SpecificationGroups,
+		CategoryID:          props.CategoryID,
 	}
 
 	err := product.validate()
