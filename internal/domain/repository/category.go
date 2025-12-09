@@ -8,5 +8,5 @@ import (
 
 type Category interface {
 	GetOneByPublicID(CategoryPublicID) (*entity.Category, RepositoryException)
-	GetAll(entity.PaginatorInput) ([]*entity.Category, RepositoryException)
+	GetAll() ([]*entity.Category, RepositoryException)
 }
