@@ -28,14 +28,14 @@ type ProductSpecificationValueProps struct {
 }
 
 func NewProductSpecificationValue(props ProductSpecificationValueProps) (*ProductSpecificationValue, exceptions.EntityException) {
-	ProductspecificationValue := &ProductSpecificationValue{
+	productSpecificationValue := &ProductSpecificationValue{
 		ID:              props.ID,
 		ProductID:       props.ProductID,
 		SpecificationID: props.SpecificationID,
 		Value:           props.Value,
 	}
 
-	err := ProductspecificationValue.validate()
+	err := productSpecificationValue.validate()
 
 	if err != nil {
 		return nil, exceptions.Entity(err, exceptions.EntityOpts{
@@ -43,7 +43,7 @@ func NewProductSpecificationValue(props ProductSpecificationValueProps) (*Produc
 		})
 	}
 
-	return ProductspecificationValue, nil
+	return productSpecificationValue, nil
 }
 
 func (s *ProductSpecificationValue) validate() error {
@@ -52,11 +52,19 @@ func (s *ProductSpecificationValue) validate() error {
 	}
 
 	if s.ProductID <= 0 {
-		return errors.New("ProductID field cannot be less than or equal to 0")
+		return errors.New("ProductID field must be greater than 0")
 	}
 
 	if s.SpecificationID <= 0 {
-		return errors.New("SpecificationID field cannot be less than or equal to 0")
+		return errors.New("SpecificationID field must be greater than 0")
+	}
+
+	hasString := s.Value.StringValue != nil
+	hasInt := s.Value.IntValue != nil
+	hasBool := s.Value.BoolValue != nil
+
+	if !hasString && !hasInt && !hasBool {
+		return errors.New("at least one value (String, Int, or Bool) must be provided")
 	}
 
 	return nil

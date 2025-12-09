@@ -60,6 +60,10 @@ func (sg *SpecificationGroup) validate() error {
 		return errors.New("Description cannot be longer than 2000 characters")
 	}
 
+	if sg.TotalSpecifications < 0 {
+		return errors.New("TotalSpecifications cannot be negative")
+	}
+
 	return nil
 }
 

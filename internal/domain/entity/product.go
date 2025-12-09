@@ -38,15 +38,19 @@ func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 		})
 	}
 
+	if props.SpecificationValues == nil {
+		props.SpecificationValues = []*ProductSpecificationValue{}
+	}
+
 	product := &Product{
 		ID:                  props.ID,
 		PublicID:            publicID,
+		CategoryID:          props.CategoryID,
 		Name:                props.Name,
 		Description:         props.Description,
 		Price:               props.Price,
 		Rating:              props.Rating,
 		SpecificationValues: props.SpecificationValues,
-		CategoryID:          props.CategoryID,
 	}
 
 	err = product.validate()
@@ -66,11 +70,11 @@ func (p *Product) validate() error {
 	}
 
 	if len(p.PublicID) != 8 {
-		return errors.New("PublicID must be 8 characters long")
+		return errors.New("PublicID must be exactly 8 characters long")
 	}
 
-	if p.CategoryID < 0 {
-		return errors.New("CategoryID field cannot be less than 0")
+	if p.CategoryID <= 0 {
+		return errors.New("CategoryID field must be greater than 0")
 	}
 
 	if p.Name == "" {
@@ -83,6 +87,10 @@ func (p *Product) validate() error {
 
 	if len(p.Description) > 2000 {
 		return errors.New("Description cannot be longer than 2000 characters")
+	}
+
+	if p.Price < 0 {
+		return errors.New("Price cannot be negative")
 	}
 
 	if p.Rating < 0 || p.Rating > 50 {

@@ -45,8 +45,8 @@ func (s *Specification) validate() error {
 		return errors.New("ID field cannot be less than 0")
 	}
 
-	if s.EspecificationGroupID < 0 {
-		return errors.New("EspecificationGroupID field cannot be less than 0")
+	if s.EspecificationGroupID <= 0 {
+		return errors.New("EspecificationGroupID field must be greater than 0")
 	}
 
 	if s.Title == "" {
@@ -55,6 +55,10 @@ func (s *Specification) validate() error {
 
 	if len(s.Title) > 255 {
 		return errors.New("Title cannot be longer than 255 characters")
+	}
+
+	if s.Type == "" {
+		return errors.New("Type cannot be empty")
 	}
 
 	return nil

@@ -53,6 +53,10 @@ func (c *Category) validate() error {
 		return errors.New("ID field cannot be less than 0")
 	}
 
+	if c.PublicID == "" {
+		return errors.New("PublicID cannot be empty")
+	}
+
 	if c.Name == "" {
 		return errors.New("Name cannot be empty")
 	}
