@@ -8,5 +8,6 @@ import (
 
 type Product interface {
 	GetOneByID(ProductID) (*entity.Product, RepositoryException)
+	GetOneByPublicID(ProductPublicID) (*entity.Product, RepositoryException)
 	GetAll(entity.PaginatorInput) ([]*entity.Product, RepositoryException)
 }
