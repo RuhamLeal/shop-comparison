@@ -9,7 +9,7 @@ import (
 type Product interface {
 	GetOneByID(ProductID) (*entity.Product, RepositoryException)
 	GetOneByPublicID(ProductPublicID) (*entity.Product, RepositoryException)
-	GetAll(entity.PaginatorInput) ([]*entity.Product, RepositoryException)
+	GetAll(entity.PaginatorInput) ([]*entity.Product, entity.PaginatorOutput, RepositoryException)
 	CreateOne(*entity.Product) RepositoryException
 	DeleteOne(*entity.Product) RepositoryException
 	UpdateOne(*entity.Product) RepositoryException
