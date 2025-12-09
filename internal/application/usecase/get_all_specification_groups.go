@@ -41,6 +41,7 @@ func (u *GetAllSpecificationGroups) toGetAllSpecificationGroupsOutput(groups []*
 
 	for i, group := range groups {
 		outputGroups[i] = &dto.SpecificationGroupOutput{
+			PublicID:    group.PublicID,
 			Name:        group.Name,
 			Description: group.Description,
 		}
