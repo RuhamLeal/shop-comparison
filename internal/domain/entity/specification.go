@@ -7,22 +7,25 @@ import (
 )
 
 type Specification struct {
-	ID      int64
-	Title   string
-	Content string
+	ID                    int64
+	Title                 string
+	EspecificationGroupID int64
+	Type                  string
 }
 
 type SpecificationProps struct {
-	ID      int64
-	Title   string
-	Content string
+	ID                    int64
+	Title                 string
+	EspecificationGroupID int64
+	Type                  string
 }
 
 func NewSpecification(props SpecificationProps) (*Specification, exceptions.EntityException) {
 	specification := &Specification{
-		ID:      props.ID,
-		Title:   props.Title,
-		Content: props.Content,
+		ID:                    props.ID,
+		Title:                 props.Title,
+		EspecificationGroupID: props.EspecificationGroupID,
+		Type:                  props.Type,
 	}
 
 	err := specification.validate()
@@ -41,20 +44,16 @@ func (s *Specification) validate() error {
 		return errors.New("ID field cannot be less than 0")
 	}
 
+	if s.EspecificationGroupID < 0 {
+		return errors.New("EspecificationGroupID field cannot be less than 0")
+	}
+
 	if s.Title == "" {
 		return errors.New("Title cannot be empty")
 	}
 
 	if len(s.Title) > 255 {
 		return errors.New("Title cannot be longer than 255 characters")
-	}
-
-	if s.Content == "" {
-		return errors.New("Content cannot be empty")
-	}
-
-	if len(s.Content) > 2000 {
-		return errors.New("Content cannot be longer than 2000 characters")
 	}
 
 	return nil
