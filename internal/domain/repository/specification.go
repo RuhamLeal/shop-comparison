@@ -8,4 +8,5 @@ import (
 
 type Specification interface {
 	GetAllByGroupID(SpecificationGroupID) ([]*entity.Specification, RepositoryException)
+	GetOneByPublicID(SpecificationPublicID) (*entity.Specification, RepositoryException)
 }
