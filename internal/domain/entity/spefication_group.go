@@ -4,11 +4,13 @@ import (
 	"errors"
 	"project/internal/domain/constants"
 	exceptions "project/internal/domain/exception"
+	"project/internal/domain/services"
 	. "project/internal/domain/types"
 )
 
 type SpecificationGroup struct {
 	ID                  SpecificationGroupID
+	PublicID            SpecificationGroupPublicID
 	Name                string
 	Description         string
 	TotalSpecifications int64
@@ -17,6 +19,7 @@ type SpecificationGroup struct {
 
 type SpecificationGroupProps struct {
 	ID                  SpecificationGroupID
+	PublicID            SpecificationGroupPublicID
 	Name                string
 	Description         string
 	TotalSpecifications int64
@@ -24,15 +27,24 @@ type SpecificationGroupProps struct {
 }
 
 func NewSpecificationGroup(props SpecificationGroupProps) (*SpecificationGroup, exceptions.EntityException) {
+	publicId, err := services.GeneratePublicID(props.PublicID)
+
+	if err != nil {
+		return nil, exceptions.Entity(err, exceptions.EntityOpts{
+			Reason: constants.EntityBussinessError,
+		})
+	}
+
 	specificationGroup := &SpecificationGroup{
 		ID:                  props.ID,
 		Name:                props.Name,
 		Description:         props.Description,
 		TotalSpecifications: props.TotalSpecifications,
 		Specifications:      props.Specifications,
+		PublicID:            publicId,
 	}
 
-	err := specificationGroup.validate()
+	err = specificationGroup.validate()
 
 	if err != nil {
 		return nil, exceptions.Entity(err, exceptions.EntityOpts{
@@ -46,6 +58,10 @@ func NewSpecificationGroup(props SpecificationGroupProps) (*SpecificationGroup, 
 func (sg *SpecificationGroup) validate() error {
 	if sg.ID < 0 {
 		return errors.New("ID field cannot be less than 0")
+	}
+
+	if sg.PublicID == "" {
+		return errors.New("PublicID cannot be empty")
 	}
 
 	if sg.Name == "" {
