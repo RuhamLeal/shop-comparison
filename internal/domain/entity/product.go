@@ -4,11 +4,13 @@ import (
 	"errors"
 	"project/internal/domain/constants"
 	exceptions "project/internal/domain/exception"
+	"project/internal/domain/services"
 	. "project/internal/domain/types"
 )
 
 type Product struct {
 	ID                  ProductID
+	PublicID            ProductPublicID
 	CategoryID          int64
 	Name                string
 	Description         string
@@ -19,6 +21,7 @@ type Product struct {
 
 type ProductProps struct {
 	ID                  ProductID
+	PublicID            ProductPublicID
 	CategoryID          int64
 	Name                string
 	Description         string
@@ -28,8 +31,16 @@ type ProductProps struct {
 }
 
 func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
+	publicID, err := services.GeneratePublicID(props.PublicID)
+	if err != nil {
+		return nil, exceptions.Entity(err, exceptions.EntityOpts{
+			Reason: constants.EntityBussinessError,
+		})
+	}
+
 	product := &Product{
 		ID:                  props.ID,
+		PublicID:            publicID,
 		Name:                props.Name,
 		Description:         props.Description,
 		Price:               props.Price,
@@ -38,7 +49,7 @@ func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 		CategoryID:          props.CategoryID,
 	}
 
-	err := product.validate()
+	err = product.validate()
 
 	if err != nil {
 		return nil, exceptions.Entity(err, exceptions.EntityOpts{
@@ -52,6 +63,10 @@ func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 func (p *Product) validate() error {
 	if p.ID < 0 {
 		return errors.New("ID field cannot be less than 0")
+	}
+
+	if len(p.PublicID) != 8 {
+		return errors.New("PublicID must be 8 characters long")
 	}
 
 	if p.CategoryID < 0 {
