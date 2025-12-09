@@ -4,10 +4,11 @@ import (
 	"errors"
 	"project/internal/domain/constants"
 	exceptions "project/internal/domain/exception"
+	. "project/internal/domain/types"
 )
 
 type Product struct {
-	ID                  int64
+	ID                  ProductID
 	CategoryID          int64
 	Name                string
 	Description         string
@@ -17,7 +18,7 @@ type Product struct {
 }
 
 type ProductProps struct {
-	ID                  int64
+	ID                  ProductID
 	CategoryID          int64
 	Name                string
 	Description         string
