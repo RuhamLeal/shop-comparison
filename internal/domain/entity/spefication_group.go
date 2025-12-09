@@ -4,10 +4,11 @@ import (
 	"errors"
 	"project/internal/domain/constants"
 	exceptions "project/internal/domain/exception"
+	. "project/internal/domain/types"
 )
 
 type SpecificationGroup struct {
-	ID                  int64
+	ID                  SpecificationGroupID
 	Name                string
 	Description         string
 	TotalSpecifications int64
@@ -15,7 +16,7 @@ type SpecificationGroup struct {
 }
 
 type SpecificationGroupProps struct {
-	ID                  int64
+	ID                  SpecificationGroupID
 	Name                string
 	Description         string
 	TotalSpecifications int64

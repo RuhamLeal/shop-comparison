@@ -4,19 +4,20 @@ import (
 	"errors"
 	"project/internal/domain/constants"
 	exceptions "project/internal/domain/exception"
+	. "project/internal/domain/types"
 )
 
 type Specification struct {
 	ID                    int64
 	Title                 string
-	EspecificationGroupID int64
+	EspecificationGroupID SpecificationGroupID
 	Type                  string
 }
 
 type SpecificationProps struct {
 	ID                    int64
 	Title                 string
-	EspecificationGroupID int64
+	EspecificationGroupID SpecificationGroupID
 	Type                  string
 }
 
