@@ -16,7 +16,7 @@ type Product struct {
 	Description         string
 	Price               int64 // in cents R$ 5.012,00 -> 5012
 	Rating              int8  // 0-50 (10 = 1 star, 25 = 2.5 stars, 50 = 5 stars)
-	SpecificationGroups []*SpecificationGroup
+	SpecificationValues []*ProductSpecificationValue
 }
 
 type ProductProps struct {
@@ -27,7 +27,7 @@ type ProductProps struct {
 	Description         string
 	Price               int64
 	Rating              int8
-	SpecificationGroups []*SpecificationGroup
+	SpecificationValues []*ProductSpecificationValue
 }
 
 func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
@@ -45,7 +45,7 @@ func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 		Description:         props.Description,
 		Price:               props.Price,
 		Rating:              props.Rating,
-		SpecificationGroups: props.SpecificationGroups,
+		SpecificationValues: props.SpecificationValues,
 		CategoryID:          props.CategoryID,
 	}
 
@@ -92,6 +92,6 @@ func (p *Product) validate() error {
 	return nil
 }
 
-func (p *Product) HasSpecificationGroups() bool {
-	return len(p.SpecificationGroups) > 0
+func (p *Product) HasSpecifications() bool {
+	return len(p.SpecificationValues) > 0
 }
