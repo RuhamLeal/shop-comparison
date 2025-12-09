@@ -7,28 +7,28 @@ import (
 )
 
 type SpecificationGroup struct {
-	ID                int64
-	Name              string
-	Description       string
-	TotalSpefications int64
-	Specifications    []*Specification
+	ID                  int64
+	Name                string
+	Description         string
+	TotalSpecifications int64
+	Specifications      []*Specification
 }
 
 type SpecificationGroupProps struct {
-	ID                int64
-	Name              string
-	Description       string
-	TotalSpefications int64
-	Specifications    []*Specification
+	ID                  int64
+	Name                string
+	Description         string
+	TotalSpecifications int64
+	Specifications      []*Specification
 }
 
 func NewSpecificationGroup(props SpecificationGroupProps) (*SpecificationGroup, exceptions.EntityException) {
 	specificationGroup := &SpecificationGroup{
-		ID:                props.ID,
-		Name:              props.Name,
-		Description:       props.Description,
-		TotalSpefications: props.TotalSpefications,
-		Specifications:    props.Specifications,
+		ID:                  props.ID,
+		Name:                props.Name,
+		Description:         props.Description,
+		TotalSpecifications: props.TotalSpecifications,
+		Specifications:      props.Specifications,
 	}
 
 	err := specificationGroup.validate()
