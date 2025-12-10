@@ -9,15 +9,17 @@ import (
 )
 
 type Category struct {
-	ID       int64
-	PublicID CategoryPublicID
-	Name     string
+	ID          int64
+	PublicID    CategoryPublicID
+	Name        string
+	Description string
 }
 
 type CategoryProps struct {
-	ID       int64
-	PublicID CategoryPublicID
-	Name     string
+	ID          int64
+	PublicID    CategoryPublicID
+	Name        string
+	Description string
 }
 
 func NewCategory(props CategoryProps) (*Category, exceptions.EntityException) {
@@ -29,9 +31,10 @@ func NewCategory(props CategoryProps) (*Category, exceptions.EntityException) {
 	}
 
 	category := &Category{
-		ID:       props.ID,
-		PublicID: publicID,
-		Name:     props.Name,
+		ID:          props.ID,
+		PublicID:    publicID,
+		Name:        props.Name,
+		Description: props.Description,
 	}
 
 	err = category.validate()
@@ -60,6 +63,10 @@ func (c *Category) validate() error {
 
 	if len(c.Name) > 255 {
 		return errors.New("Name cannot be longer than 255 characters")
+	}
+
+	if len(c.Description) > 2000 {
+		return errors.New("Description cannot be longer than 2000 characters")
 	}
 
 	return nil
