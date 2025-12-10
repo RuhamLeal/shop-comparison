@@ -2,6 +2,15 @@ package dto
 
 import "project/internal/domain/types"
 
+type DeleteOneProductInput struct {
+	PublicID types.ProductPublicID `json:"public_id"`
+}
+
+type DeleteOneProductOutput struct {
+	Deleted bool   `json:"deleted"`
+	Message string `json:"message"`
+}
+
 type UpdateOneProductInput struct {
 	PublicID         types.ProductPublicID  `json:"public_id"`
 	Name             types.ProductName      `json:"name"`
