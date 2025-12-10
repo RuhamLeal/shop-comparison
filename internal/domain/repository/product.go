@@ -12,6 +12,7 @@ type Product interface {
 	GetOneByPublicId(ProductPublicID) (*entity.Product, RepositoryException)
 	GetOneByPublicIdWithSpecificationGroups(ProductPublicID) (*aggregate.ProductWithSpecificationsGroups, RepositoryException)
 	GetAll(entity.PaginatorInput) ([]*entity.Product, entity.PaginatorOutput, RepositoryException)
+	GetAllByCategoryID(CategoryID, entity.PaginatorInput) ([]*entity.Product, entity.PaginatorOutput, RepositoryException)
 	CreateOne(*entity.Product) RepositoryException
 	DeleteOne(*entity.Product) RepositoryException
 	UpdateOne(*entity.Product) RepositoryException
