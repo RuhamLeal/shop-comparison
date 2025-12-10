@@ -13,7 +13,7 @@ type Specification struct {
 	PublicID              SpecificationPublicID
 	Title                 string
 	EspecificationGroupID SpecificationGroupID
-	Type                  string
+	Type                  SpecificationType
 }
 
 type SpecificationProps struct {
@@ -21,7 +21,7 @@ type SpecificationProps struct {
 	PublicID              SpecificationPublicID
 	Title                 string
 	EspecificationGroupID SpecificationGroupID
-	Type                  string
+	Type                  SpecificationType
 }
 
 func NewSpecification(props SpecificationProps) (*Specification, exceptions.EntityException) {

@@ -13,5 +13,5 @@ type GetAllSpecificationsOutput struct {
 type SpecificationOutput struct {
 	PublicID types.SpecificationPublicID `json:"public_id"`
 	Title    string                      `json:"name"`
-	Type     string                      `json:"type"`
+	Type     types.SpecificationType     `json:"type"`
 }
