@@ -17,14 +17,14 @@ type ProductSpecificationValue struct {
 	ID              int64
 	ProductID       ProductID
 	SpecificationID int64
-	Value           SpecValue
+	Value           *SpecValue
 }
 
 type ProductSpecificationValueProps struct {
 	ID              int64
 	ProductID       ProductID
 	SpecificationID int64
-	Value           SpecValue
+	Value           *SpecValue
 }
 
 func NewProductSpecificationValue(props ProductSpecificationValueProps) (*ProductSpecificationValue, exceptions.EntityException) {
