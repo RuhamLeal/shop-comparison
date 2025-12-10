@@ -2,6 +2,21 @@ package dto
 
 import "project/internal/domain/types"
 
+type UpdateOneProductInput struct {
+	PublicID         types.ProductPublicID  `json:"public_id"`
+	Name             types.ProductName      `json:"name"`
+	Description      string                 `json:"description"`
+	Price            int64                  `json:"price"`
+	ImageURL         string                 `json:"image_url"`
+	Rating           int8                   `json:"rating"`
+	CategoryPublicID types.CategoryPublicID `json:"category_public_id"`
+}
+
+type UpdateOneProductOutput struct {
+	Updated bool   `json:"updated"`
+	Message string `json:"message"`
+}
+
 type CreateOneProductInput struct {
 	Name             types.ProductName      `json:"name"`
 	Description      string                 `json:"description"`
