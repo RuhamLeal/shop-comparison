@@ -11,8 +11,8 @@ import (
 type Product struct {
 	ID                  ProductID
 	PublicID            ProductPublicID
-	CategoryID          int64
-	Name                string
+	CategoryID          CategoryID
+	Name                ProductName
 	Description         string
 	Price               int64 // in cents R$ 5.012,00 -> 5012
 	Rating              int8  // 0-50 (10 = 1 star, 25 = 2.5 stars, 50 = 5 stars)
@@ -23,8 +23,8 @@ type Product struct {
 type ProductProps struct {
 	ID                  ProductID
 	PublicID            ProductPublicID
-	CategoryID          int64
-	Name                string
+	CategoryID          CategoryID
+	Name                ProductName
 	Description         string
 	Price               int64
 	Rating              int8
