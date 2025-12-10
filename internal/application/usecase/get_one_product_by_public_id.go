@@ -22,7 +22,7 @@ func NewGetOneProductByPublicId(
 }
 
 func (u *GetOneProductByPublicId) Execute(input dto.GetOneProductByPublicIdInput) (*dto.GetOneProductByPublicIdOutput, exceptions.UsecaseException) {
-	product, repoErr := u.ProductRepository.GetOneByPublicID(input.PublicID)
+	product, repoErr := u.ProductRepository.GetOneByPublicId(input.PublicID)
 
 	if repoErr != nil {
 		return nil, exceptions.Usecase(repoErr, exceptions.UsecaseOpts{
