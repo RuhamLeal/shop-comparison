@@ -2,6 +2,18 @@ package dto
 
 import "project/internal/domain/types"
 
+type CreateOneProductInput struct {
+	Name             types.ProductName      `json:"name"`
+	Description      string                 `json:"description"`
+	Price            int64                  `json:"price"`
+	ImageURL         string                 `json:"image_url"`
+	CategoryPublicID types.CategoryPublicID `json:"category_public_id"`
+}
+
+type CreateOneProductOutput struct {
+	PublicID types.ProductPublicID `json:"public_id"`
+}
+
 type GetAllProductsByCategoryIdInput struct {
 	PaginatorInput   *PaginatorInput        `json:"paginator"`
 	CategoryPublicID types.CategoryPublicID `json:"category_public_id"`
@@ -17,7 +29,7 @@ type GetAllProductsByCategoryIdUnit struct {
 	Price       int64                 `json:"price"`
 	Rating      int8                  `json:"rating"`
 	ImageURL    string                `json:"image_url"`
-	Name        string                `json:"name"`
+	Name        types.ProductName     `json:"name"`
 	Description string                `json:"description"`
 }
 
@@ -35,7 +47,7 @@ type GetAllProductsUnit struct {
 	Price       int64                 `json:"price"`
 	Rating      int8                  `json:"rating"`
 	ImageURL    string                `json:"image_url"`
-	Name        string                `json:"name"`
+	Name        types.ProductName     `json:"name"`
 	Description string                `json:"description"`
 }
 
@@ -44,11 +56,11 @@ type GetOneProductByPublicIdInput struct {
 }
 
 type GetOneProductByPublicIdOutput struct {
-	Price       int64  `json:"price"`
-	Rating      int8   `json:"rating"`
-	ImageURL    string `json:"image_url"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Price       int64             `json:"price"`
+	Rating      int8              `json:"rating"`
+	ImageURL    string            `json:"image_url"`
+	Name        types.ProductName `json:"name"`
+	Description string            `json:"description"`
 }
 
 type GetOneProductWithSpecificationsByPublicIdInput struct {
@@ -59,7 +71,7 @@ type GetOneProductWithSpecificationsByPublicIdOutput struct {
 	Price                int64                              `json:"price"`
 	Rating               int8                               `json:"rating"`
 	ImageURL             string                             `json:"image_url"`
-	Name                 string                             `json:"name"`
+	Name                 types.ProductName                  `json:"name"`
 	Description          string                             `json:"description"`
 	SpecificationsGroups []*ProductSpecificationGroupOutput `json:"specifications_groups"`
 }
