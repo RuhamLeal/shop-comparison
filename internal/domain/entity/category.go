@@ -9,14 +9,14 @@ import (
 )
 
 type Category struct {
-	ID          int64
+	ID          CategoryID
 	PublicID    CategoryPublicID
 	Name        string
 	Description string
 }
 
 type CategoryProps struct {
-	ID          int64
+	ID          CategoryID
 	PublicID    CategoryPublicID
 	Name        string
 	Description string
