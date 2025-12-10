@@ -16,6 +16,7 @@ type Product struct {
 	Description         string
 	Price               int64 // in cents R$ 5.012,00 -> 5012
 	Rating              int8  // 0-50 (10 = 1 star, 25 = 2.5 stars, 50 = 5 stars)
+	ImageURL            string
 	SpecificationValues []*ProductSpecificationValue
 }
 
@@ -27,6 +28,7 @@ type ProductProps struct {
 	Description         string
 	Price               int64
 	Rating              int8
+	ImageURL            string
 	SpecificationValues []*ProductSpecificationValue
 }
 
@@ -51,6 +53,7 @@ func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 		Price:               props.Price,
 		Rating:              props.Rating,
 		SpecificationValues: props.SpecificationValues,
+		ImageURL:            props.ImageURL,
 	}
 
 	err = product.validate()
