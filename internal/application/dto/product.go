@@ -2,6 +2,24 @@ package dto
 
 import "project/internal/domain/types"
 
+type GetAllProductsInput struct {
+	PaginatorInput *PaginatorInput `json:"paginator"`
+}
+
+type GetAllProductsOutput struct {
+	PaginatorOutput *PaginatorOutput      `json:"paginator"`
+	Products        []*GetAllProductsUnit `json:"products"`
+}
+
+type GetAllProductsUnit struct {
+	PublicID    types.ProductPublicID `json:"public_id"`
+	Price       int64                 `json:"price"`
+	Rating      int8                  `json:"rating"`
+	ImageURL    string                `json:"image_url"`
+	Name        string                `json:"name"`
+	Description string                `json:"description"`
+}
+
 type GetOneProductByPublicIdInput struct {
 	PublicID types.ProductPublicID `json:"public_id"`
 }
