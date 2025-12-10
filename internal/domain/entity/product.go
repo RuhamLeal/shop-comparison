@@ -32,6 +32,15 @@ type ProductProps struct {
 	SpecificationValues []*ProductSpecificationValue
 }
 
+type UpdateProductProps struct {
+	CategoryID  CategoryID
+	Name        ProductName
+	Description string
+	Price       int64
+	Rating      int8
+	ImageURL    string
+}
+
 func NewProduct(props ProductProps) (*Product, exceptions.EntityException) {
 	publicID, err := services.GeneratePublicID(props.PublicID)
 	if err != nil {
@@ -105,4 +114,23 @@ func (p *Product) validate() error {
 
 func (p *Product) HasSpecifications() bool {
 	return len(p.SpecificationValues) > 0
+}
+
+func (p *Product) Update(props UpdateProductProps) exceptions.EntityException {
+	p.CategoryID = props.CategoryID
+	p.Name = props.Name
+	p.Description = props.Description
+	p.Price = props.Price
+	p.Rating = props.Rating
+	p.ImageURL = props.ImageURL
+
+	err := p.validate()
+
+	if err != nil {
+		return exceptions.Entity(err, exceptions.EntityOpts{
+			Reason: constants.EntityValidationError,
+		})
+	}
+
+	return nil
 }
