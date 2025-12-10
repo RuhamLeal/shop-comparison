@@ -12,14 +12,12 @@ type Category struct {
 	ID       int64
 	PublicID CategoryPublicID
 	Name     string
-	Products []*Product
 }
 
 type CategoryProps struct {
 	ID       int64
 	PublicID CategoryPublicID
 	Name     string
-	Products []*Product
 }
 
 func NewCategory(props CategoryProps) (*Category, exceptions.EntityException) {
@@ -34,7 +32,6 @@ func NewCategory(props CategoryProps) (*Category, exceptions.EntityException) {
 		ID:       props.ID,
 		PublicID: publicID,
 		Name:     props.Name,
-		Products: props.Products,
 	}
 
 	err = category.validate()
@@ -66,8 +63,4 @@ func (c *Category) validate() error {
 	}
 
 	return nil
-}
-
-func (c *Category) HasProducts() bool {
-	return len(c.Products) > 0
 }
