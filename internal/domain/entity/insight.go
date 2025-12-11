@@ -20,6 +20,7 @@ func NewInsight(props InsightProps) *Insight {
 	insight := &Insight{
 		ProductID: props.ProductID,
 		Favorable: props.Favorable,
+		Neutral:   props.Neutral,
 		Message:   props.Message,
 	}
 
