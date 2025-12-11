@@ -11,7 +11,6 @@ const (
 	ValidatorHttpContextBody  HttpContextField = "body"
 	ValidatorHttpContextQuery HttpContextField = "query"
 	ValidatorHttpContextURI   HttpContextField = "uri"
-	ValidatorHttpContextForm  HttpContextField = "form"
 )
 
 type HttpValidator struct {
@@ -96,26 +95,6 @@ func (hv *HttpValidator) Validate(data HttpValidateInput) (ValidatorValue, Valid
 		maps.Copy(validatedData, validatedValMap)
 	}
 
-	if hv.fields[ValidatorHttpContextForm] != nil {
-		form, exists := data[ValidatorHttpContextForm]
-
-		if !exists || len(form) == 0 {
-			return nil, "Missing form data"
-		}
-
-		validatedVal, issue := hv.fields[ValidatorHttpContextForm].Validate(form)
-		if issue != "" {
-			return nil, fmt.Sprintf("[form] %s", issue)
-		}
-		validatedValMap, isMap := validatedVal.(MapAny)
-
-		if !isMap {
-			return nil, "Invalid validated Form format"
-		}
-
-		maps.Copy(validatedData, validatedValMap)
-	}
-
 	return validatedData, ""
 }
 
@@ -131,10 +110,5 @@ func (hv *HttpValidator) URI(schema *ValidatorSchema) *HttpValidator {
 
 func (hv *HttpValidator) Query(schema *ValidatorSchema) *HttpValidator {
 	hv.fields[ValidatorHttpContextQuery] = schema
-	return hv
-}
-
-func (hv *HttpValidator) Form(schema *ValidatorSchema) *HttpValidator {
-	hv.fields[ValidatorHttpContextForm] = schema
 	return hv
 }
