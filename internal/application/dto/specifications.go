@@ -3,7 +3,7 @@ package dto
 import "project/internal/domain/types"
 
 type GetAllSpecificationsInput struct {
-	SpecificationGroupPublicID types.SpecificationGroupPublicID `json:"specification_group_public_id"`
+	SpecificationGroupPublicID types.SpecificationGroupPublicID `mapstructure:"specification_group_public_id"`
 }
 
 type GetAllSpecificationsOutput struct {

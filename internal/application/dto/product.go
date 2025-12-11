@@ -3,8 +3,8 @@ package dto
 import "project/internal/domain/types"
 
 type CompareProductsInput struct {
-	LeftPublicID  types.ProductPublicID `json:"left_public_id"`
-	RightPublicID types.ProductPublicID `json:"right_public_id"`
+	LeftPublicID  types.ProductPublicID `mapstructure:"left_public_id" json:"left_public_id"`
+	RightPublicID types.ProductPublicID `mapstructure:"right_public_id" json:"right_public_id"`
 }
 
 type CompareProductsOutput struct {
@@ -45,7 +45,7 @@ type InsightOutput struct {
 }
 
 type DeleteOneProductInput struct {
-	PublicID types.ProductPublicID `json:"public_id"`
+	PublicID types.ProductPublicID `mapstructure:"public_id"`
 }
 
 type DeleteOneProductOutput struct {
@@ -54,13 +54,13 @@ type DeleteOneProductOutput struct {
 }
 
 type UpdateOneProductInput struct {
-	PublicID         types.ProductPublicID  `json:"public_id"`
-	Name             types.ProductName      `json:"name"`
-	Description      string                 `json:"description"`
-	Price            int64                  `json:"price"`
-	ImageURL         string                 `json:"image_url"`
-	Rating           int8                   `json:"rating"`
-	CategoryPublicID types.CategoryPublicID `json:"category_public_id"`
+	PublicID         types.ProductPublicID  `mapstructure:"public_id"`
+	Name             types.ProductName      `json:"name" mapstructure:"name"`
+	Description      string                 `json:"description" mapstructure:"description"`
+	Price            int64                  `json:"price" mapstructure:"price"`
+	ImageURL         string                 `json:"image_url" mapstructure:"image_url"`
+	Rating           int8                   `json:"rating" mapstructure:"rating"`
+	CategoryPublicID types.CategoryPublicID `json:"category_public_id" mapstructure:"category_public_id"`
 }
 
 type UpdateOneProductOutput struct {
@@ -69,11 +69,11 @@ type UpdateOneProductOutput struct {
 }
 
 type CreateOneProductInput struct {
-	Name             types.ProductName      `json:"name"`
-	Description      string                 `json:"description"`
-	Price            int64                  `json:"price"`
-	ImageURL         string                 `json:"image_url"`
-	CategoryPublicID types.CategoryPublicID `json:"category_public_id"`
+	Name             types.ProductName      `json:"name" mapstructure:"name"`
+	Description      string                 `json:"description" mapstructure:"description"`
+	Price            int64                  `json:"price" mapstructure:"price"`
+	ImageURL         string                 `json:"image_url" mapstructure:"image_url"`
+	CategoryPublicID types.CategoryPublicID `json:"category_public_id" mapstructure:"category_public_id"`
 }
 
 type CreateOneProductOutput struct {
@@ -81,8 +81,8 @@ type CreateOneProductOutput struct {
 }
 
 type GetAllProductsByCategoryIdInput struct {
-	PaginatorInput   *PaginatorInput        `json:"paginator"`
-	CategoryPublicID types.CategoryPublicID `json:"category_public_id"`
+	PaginatorInput   *PaginatorInput        `mapstructure:"paginator"`
+	CategoryPublicID types.CategoryPublicID `mapstructure:"category_public_id"`
 }
 
 type GetAllProductsByCategoryIdOutput struct {
@@ -100,7 +100,7 @@ type GetAllProductsByCategoryIdUnit struct {
 }
 
 type GetAllProductsInput struct {
-	PaginatorInput *PaginatorInput `json:"paginator"`
+	PaginatorInput *PaginatorInput `mapstructure:"paginator"`
 }
 
 type GetAllProductsOutput struct {
@@ -118,7 +118,7 @@ type GetAllProductsUnit struct {
 }
 
 type GetOneProductByPublicIdInput struct {
-	PublicID types.ProductPublicID `json:"public_id"`
+	PublicID types.ProductPublicID `mapstructure:"public_id"`
 }
 
 type GetOneProductByPublicIdOutput struct {
@@ -130,7 +130,7 @@ type GetOneProductByPublicIdOutput struct {
 }
 
 type GetOneProductWithSpecificationsByPublicIdInput struct {
-	PublicID types.ProductPublicID `json:"public_id"`
+	PublicID types.ProductPublicID `mapstructure:"public_id"`
 }
 
 type GetOneProductWithSpecificationsByPublicIdOutput struct {
