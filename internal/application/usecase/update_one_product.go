@@ -26,7 +26,7 @@ func NewUpdateOneProduct(
 	}
 }
 
-func (u *UpdateOneProduct) Execute(input dto.UpdateOneProductInput) (*dto.UpdateOneProductOutput, exceptions.UsecaseException) {
+func (u *UpdateOneProduct) Execute(input *dto.UpdateOneProductInput) (*dto.UpdateOneProductOutput, exceptions.UsecaseException) {
 	category, repoErr := u.CategoryRepository.GetOneByPublicID(input.CategoryPublicID)
 
 	if repoErr != nil {

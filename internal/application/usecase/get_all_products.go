@@ -22,7 +22,7 @@ func NewGetAllProducts(
 	}
 }
 
-func (u *GetAllProducts) Execute(input dto.GetAllProductsInput) (*dto.GetAllProductsOutput, exceptions.UsecaseException) {
+func (u *GetAllProducts) Execute(input *dto.GetAllProductsInput) (*dto.GetAllProductsOutput, exceptions.UsecaseException) {
 	paginationInput := entity.PaginatorInput{
 		Skip:  input.PaginatorInput.Skip,
 		Limit: input.PaginatorInput.Limit,

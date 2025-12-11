@@ -26,7 +26,7 @@ func NewCreateOneProduct(
 	}
 }
 
-func (u *CreateOneProduct) Execute(input dto.CreateOneProductInput) (*dto.CreateOneProductOutput, exceptions.UsecaseException) {
+func (u *CreateOneProduct) Execute(input *dto.CreateOneProductInput) (*dto.CreateOneProductOutput, exceptions.UsecaseException) {
 	category, repoErr := u.CategoryRepository.GetOneByPublicID(input.CategoryPublicID)
 
 	if repoErr != nil {

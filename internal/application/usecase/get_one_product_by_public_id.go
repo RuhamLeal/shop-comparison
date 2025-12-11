@@ -21,7 +21,7 @@ func NewGetOneProductByPublicId(
 	}
 }
 
-func (u *GetOneProductByPublicId) Execute(input dto.GetOneProductByPublicIdInput) (*dto.GetOneProductByPublicIdOutput, exceptions.UsecaseException) {
+func (u *GetOneProductByPublicId) Execute(input *dto.GetOneProductByPublicIdInput) (*dto.GetOneProductByPublicIdOutput, exceptions.UsecaseException) {
 	product, repoErr := u.ProductRepository.GetOneByPublicId(input.PublicID)
 
 	if repoErr != nil {

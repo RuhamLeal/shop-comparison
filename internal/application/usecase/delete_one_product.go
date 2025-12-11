@@ -21,7 +21,7 @@ func NewDeleteOneProduct(
 	}
 }
 
-func (u *DeleteOneProduct) Execute(input dto.DeleteOneProductInput) (*dto.DeleteOneProductOutput, exceptions.UsecaseException) {
+func (u *DeleteOneProduct) Execute(input *dto.DeleteOneProductInput) (*dto.DeleteOneProductOutput, exceptions.UsecaseException) {
 	product, repoErr := u.ProductRepository.GetOneByPublicId(input.PublicID)
 
 	if repoErr != nil {

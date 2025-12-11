@@ -25,7 +25,7 @@ func NewGetAllProductsByCategoryId(
 	}
 }
 
-func (u *GetAllProductsByCategoryId) Execute(input dto.GetAllProductsByCategoryIdInput) (*dto.GetAllProductsByCategoryIdOutput, exceptions.UsecaseException) {
+func (u *GetAllProductsByCategoryId) Execute(input *dto.GetAllProductsByCategoryIdInput) (*dto.GetAllProductsByCategoryIdOutput, exceptions.UsecaseException) {
 	category, repoErr := u.CategoryRepository.GetOneByPublicID(input.CategoryPublicID)
 
 	if repoErr != nil {

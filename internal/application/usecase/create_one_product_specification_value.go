@@ -29,7 +29,7 @@ func NewCreateOneProductSpecificationValue(
 	}
 }
 
-func (u *CreateOneProductSpecificationValue) Execute(input dto.CreateOneProductSpecificationValueInput) (*dto.CreateOneProductSpecificationValueOutput, exceptions.UsecaseException) {
+func (u *CreateOneProductSpecificationValue) Execute(input *dto.CreateOneProductSpecificationValueInput) (*dto.CreateOneProductSpecificationValueOutput, exceptions.UsecaseException) {
 	product, repoErr := u.ProductRepository.GetOneByPublicId(input.ProductPublicID)
 
 	if repoErr != nil {

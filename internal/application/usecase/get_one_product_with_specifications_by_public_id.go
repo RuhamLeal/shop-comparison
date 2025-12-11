@@ -25,7 +25,7 @@ func NewGetOneProductWithSpecificationsByPublicId(
 	}
 }
 
-func (u *GetOneProductWithSpecificationsByPublicId) Execute(input dto.GetOneProductWithSpecificationsByPublicIdInput) (*dto.GetOneProductWithSpecificationsByPublicIdOutput, exceptions.UsecaseException) {
+func (u *GetOneProductWithSpecificationsByPublicId) Execute(input *dto.GetOneProductWithSpecificationsByPublicIdInput) (*dto.GetOneProductWithSpecificationsByPublicIdOutput, exceptions.UsecaseException) {
 	productAggregate, repoErr := u.ProductRepository.GetOneByPublicIdWithSpecificationGroups(input.PublicID)
 
 	if repoErr != nil {

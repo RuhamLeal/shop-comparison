@@ -22,7 +22,7 @@ func NewCompareProducts(
 	}
 }
 
-func (u *CompareProducts) Execute(input dto.CompareProductsInput) (*dto.CompareProductsOutput, exceptions.UsecaseException) {
+func (u *CompareProducts) Execute(input *dto.CompareProductsInput) (*dto.CompareProductsOutput, exceptions.UsecaseException) {
 	leftProduct, repoErr := u.ProductRepository.GetOneByPublicId(input.LeftPublicID)
 
 	if repoErr != nil {

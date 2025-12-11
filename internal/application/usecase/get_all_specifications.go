@@ -25,7 +25,7 @@ func NewGetAllSpecifications(
 	}
 }
 
-func (u *GetAllSpecifications) Execute(input dto.GetAllSpecificationsInput) (*dto.GetAllSpecificationsOutput, exceptions.UsecaseException) {
+func (u *GetAllSpecifications) Execute(input *dto.GetAllSpecificationsInput) (*dto.GetAllSpecificationsOutput, exceptions.UsecaseException) {
 	group, repoErr := u.SpecificationGroupRepository.GetOneByPublicID(input.SpecificationGroupPublicID)
 
 	if repoErr != nil {
