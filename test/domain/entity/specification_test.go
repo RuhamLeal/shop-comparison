@@ -1,15 +1,14 @@
 package entity_test
 
 import (
+	domain_entity "project/internal/domain/entity"
 	"strings"
 	"testing"
-
-	domain_entity "project/internal/domain/entity"
 )
 
 func TestNewSpecification(t *testing.T) {
 	longTitle := strings.Repeat("a", 256)
-	longContent := strings.Repeat("a", 2001)
+	maxTitle := strings.Repeat("a", 255)
 
 	tests := []struct {
 		name        string
@@ -20,37 +19,57 @@ func TestNewSpecification(t *testing.T) {
 		{
 			name: "Should create a valid specification",
 			props: domain_entity.SpecificationProps{
-				ID:      1,
-				Title:   "Material",
-				Content: "Aluminum",
+				ID:                    1,
+				PublicID:              "12345678",
+				Title:                 "Screen Size",
+				EspecificationGroupID: 10,
+				Type:                  "string",
 			},
 			expectError: false,
 		},
 		{
-			name: "Should create specification with ID 0",
+			name: "Should allow max length Title",
 			props: domain_entity.SpecificationProps{
-				ID:      0,
-				Title:   "Weight",
-				Content: "200g",
+				ID:                    2,
+				PublicID:              "87654321",
+				Title:                 maxTitle,
+				EspecificationGroupID: 10,
+				Type:                  "int",
 			},
 			expectError: false,
 		},
 		{
 			name: "Should return error when ID is negative",
 			props: domain_entity.SpecificationProps{
-				ID:      -1,
-				Title:   "Valid Title",
-				Content: "Valid Content",
+				ID:                    -1,
+				PublicID:              "12345678",
+				Title:                 "Valid Title",
+				EspecificationGroupID: 10,
+				Type:                  "string",
 			},
 			expectError: true,
 			expectedMsg: "ID field cannot be less than 0",
 		},
 		{
+			name: "Should return error when EspecificationGroupID is zero or negative",
+			props: domain_entity.SpecificationProps{
+				ID:                    1,
+				PublicID:              "12345678",
+				Title:                 "Valid Title",
+				EspecificationGroupID: 0,
+				Type:                  "string",
+			},
+			expectError: true,
+			expectedMsg: "EspecificationGroupID field must be greater than 0",
+		},
+		{
 			name: "Should return error when Title is empty",
 			props: domain_entity.SpecificationProps{
-				ID:      1,
-				Title:   "",
-				Content: "Valid Content",
+				ID:                    1,
+				PublicID:              "12345678",
+				Title:                 "",
+				EspecificationGroupID: 10,
+				Type:                  "string",
 			},
 			expectError: true,
 			expectedMsg: "Title cannot be empty",
@@ -58,32 +77,26 @@ func TestNewSpecification(t *testing.T) {
 		{
 			name: "Should return error when Title is too long",
 			props: domain_entity.SpecificationProps{
-				ID:      1,
-				Title:   longTitle,
-				Content: "Valid Content",
+				ID:                    1,
+				PublicID:              "12345678",
+				Title:                 longTitle,
+				EspecificationGroupID: 10,
+				Type:                  "string",
 			},
 			expectError: true,
 			expectedMsg: "Title cannot be longer than 255 characters",
 		},
 		{
-			name: "Should return error when Content is empty",
+			name: "Should return error when Type is empty",
 			props: domain_entity.SpecificationProps{
-				ID:      1,
-				Title:   "Valid Title",
-				Content: "",
+				ID:                    1,
+				PublicID:              "12345678",
+				Title:                 "Valid Title",
+				EspecificationGroupID: 10,
+				Type:                  "",
 			},
 			expectError: true,
-			expectedMsg: "Content cannot be empty",
-		},
-		{
-			name: "Should return error when Content is too long",
-			props: domain_entity.SpecificationProps{
-				ID:      1,
-				Title:   "Valid Title",
-				Content: longContent,
-			},
-			expectError: true,
-			expectedMsg: "Content cannot be longer than 2000 characters",
+			expectedMsg: "Type cannot be empty",
 		},
 	}
 
@@ -105,9 +118,16 @@ func TestNewSpecification(t *testing.T) {
 				}
 				if spec == nil {
 					t.Error("Expected specification instance, but got nil")
+					return
 				}
-				if spec != nil && spec.Title != tt.props.Title {
+				if spec.Title != tt.props.Title {
 					t.Errorf("Expected title %s, got %s", tt.props.Title, spec.Title)
+				}
+				if spec.EspecificationGroupID != tt.props.EspecificationGroupID {
+					t.Errorf("Expected GroupID %d, got %d", tt.props.EspecificationGroupID, spec.EspecificationGroupID)
+				}
+				if spec.Type != tt.props.Type {
+					t.Errorf("Expected Type %s, got %s", tt.props.Type, spec.Type)
 				}
 			}
 		})
