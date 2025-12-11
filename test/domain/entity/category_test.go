@@ -1,4 +1,4 @@
-package entity
+package entity_test
 
 import (
 	domain_entity "project/internal/domain/entity"
@@ -8,6 +8,9 @@ import (
 
 func TestNewCategory(t *testing.T) {
 	longName := strings.Repeat("a", 256)
+	maxName := strings.Repeat("a", 255)
+	longDescription := strings.Repeat("b", 2001)
+	maxDescription := strings.Repeat("b", 2000)
 
 	tests := []struct {
 		name        string
@@ -24,21 +27,45 @@ func TestNewCategory(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name: "Should create category with products",
-			props: domain_entity.CategoryProps{
-				ID:   2,
-				Name: "Computers",
-				Products: []*domain_entity.Product{
-					{ID: 1, Name: "Laptop"},
-				},
-			},
-			expectError: false,
-		},
-		{
 			name: "Should create category with ID 0",
 			props: domain_entity.CategoryProps{
 				ID:   0,
 				Name: "General",
+			},
+			expectError: false,
+		},
+		{
+			name: "Should create category with Description",
+			props: domain_entity.CategoryProps{
+				ID:          2,
+				Name:        "Computers",
+				Description: "Laptops and Desktops",
+			},
+			expectError: false,
+		},
+		{
+			name: "Should allow max length Name",
+			props: domain_entity.CategoryProps{
+				ID:   3,
+				Name: maxName,
+			},
+			expectError: false,
+		},
+		{
+			name: "Should allow max length Description",
+			props: domain_entity.CategoryProps{
+				ID:          4,
+				Name:        "Valid Name",
+				Description: maxDescription,
+			},
+			expectError: false,
+		},
+		{
+			name: "Should use provided PublicID",
+			props: domain_entity.CategoryProps{
+				ID:       5,
+				PublicID: "custom-uuid-123",
+				Name:     "Custom ID Cat",
 			},
 			expectError: false,
 		},
@@ -69,6 +96,16 @@ func TestNewCategory(t *testing.T) {
 			expectError: true,
 			expectedMsg: "Name cannot be longer than 255 characters",
 		},
+		{
+			name: "Should return error when Description is too long",
+			props: domain_entity.CategoryProps{
+				ID:          1,
+				Name:        "Valid Name",
+				Description: longDescription,
+			},
+			expectError: true,
+			expectedMsg: "Description cannot be longer than 2000 characters",
+		},
 	}
 
 	for _, tt := range tests {
@@ -89,43 +126,17 @@ func TestNewCategory(t *testing.T) {
 				}
 				if category == nil {
 					t.Error("Expected category instance, but got nil")
+					return
 				}
-				if category != nil && category.Name != tt.props.Name {
+				if category.Name != tt.props.Name {
 					t.Errorf("Expected name %s, got %s", tt.props.Name, category.Name)
 				}
-			}
-		})
-	}
-}
-
-func TestCategory_HasProducts(t *testing.T) {
-	tests := []struct {
-		name     string
-		products []*domain_entity.Product
-		expected bool
-	}{
-		{
-			name:     "Should return false when products list is nil",
-			products: nil,
-			expected: false,
-		},
-		{
-			name:     "Should return false when products list is empty",
-			products: []*domain_entity.Product{},
-			expected: false,
-		},
-		{
-			name:     "Should return true when products list has items",
-			products: []*domain_entity.Product{{ID: 1, Name: "Test"}},
-			expected: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			c := &domain_entity.Category{Products: tt.products}
-			if got := c.HasProducts(); got != tt.expected {
-				t.Errorf("HasProducts() = %v, want %v", got, tt.expected)
+				if category.PublicID == "" {
+					t.Error("Expected PublicID to be generated, got empty string")
+				}
+				if tt.props.PublicID != "" && category.PublicID != tt.props.PublicID {
+					t.Errorf("Expected PublicID %s, got %s", tt.props.PublicID, category.PublicID)
+				}
 			}
 		})
 	}
