@@ -2,6 +2,48 @@ package dto
 
 import "project/internal/domain/types"
 
+type CompareProductsInput struct {
+	LeftPublicID  types.ProductPublicID `json:"left_public_id"`
+	RightPublicID types.ProductPublicID `json:"right_public_id"`
+}
+
+type CompareProductsOutput struct {
+	Price          *PriceComparisonOutput            `json:"price"`
+	Rating         *RatingComparisonOutput           `json:"rating"`
+	Specifications []*SpecificationsComparisonOutput `json:"specifications"`
+}
+
+type PriceComparisonOutput struct {
+	Left     int64            `json:"left"`
+	Right    int64            `json:"right"`
+	Insights []*InsightOutput `json:"insights"`
+}
+
+type RatingComparisonOutput struct {
+	Left     int8             `json:"left"`
+	Right    int8             `json:"right"`
+	Insights []*InsightOutput `json:"insights"`
+}
+
+type SpecificationsComparisonOutput struct {
+	Left     *SpecificationComparisonOutput `json:"left"`
+	Right    *SpecificationComparisonOutput `json:"right"`
+	Type     types.SpecificationType        `json:"type"`
+	Insights []*InsightOutput               `json:"insights"`
+}
+
+type SpecificationComparisonOutput struct {
+	StringValue *string `json:"string_value,omitempty"`
+	IntValue    *int64  `json:"int_value,omitempty"`
+	BoolValue   *bool   `json:"bool_value,omitempty"`
+}
+
+type InsightOutput struct {
+	Favorable bool   `json:"favorable"`
+	Neutral   bool   `json:"neutral"`
+	Message   string `json:"message"`
+}
+
 type DeleteOneProductInput struct {
 	PublicID types.ProductPublicID `json:"public_id"`
 }

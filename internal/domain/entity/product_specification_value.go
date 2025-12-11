@@ -17,6 +17,7 @@ type ProductSpecificationValue struct {
 	ID              int64
 	ProductID       ProductID
 	SpecificationID SpecificationID
+	Type            SpecificationType
 	Value           *SpecValue
 }
 
@@ -24,6 +25,7 @@ type ProductSpecificationValueProps struct {
 	ID              int64
 	ProductID       ProductID
 	SpecificationID SpecificationID
+	Type            SpecificationType
 	Value           *SpecValue
 }
 
@@ -38,6 +40,7 @@ func NewProductSpecificationValue(props ProductSpecificationValueProps) (*Produc
 		ID:              props.ID,
 		ProductID:       props.ProductID,
 		SpecificationID: props.SpecificationID,
+		Type:            props.Type,
 		Value:           props.Value,
 	}
 
