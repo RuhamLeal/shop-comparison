@@ -9,7 +9,7 @@ import (
 )
 
 type Specification struct {
-	ID                    int64
+	ID                    SpecificationID
 	PublicID              SpecificationPublicID
 	Title                 string
 	EspecificationGroupID SpecificationGroupID
@@ -17,7 +17,7 @@ type Specification struct {
 }
 
 type SpecificationProps struct {
-	ID                    int64
+	ID                    SpecificationID
 	PublicID              SpecificationPublicID
 	Title                 string
 	EspecificationGroupID SpecificationGroupID

@@ -8,6 +8,7 @@ import (
 	"project/internal/domain/entity"
 	exceptions "project/internal/domain/exception"
 	"project/internal/domain/repository"
+	"project/internal/domain/types"
 )
 
 type GetOneProductWithSpecificationsByPublicId struct {
@@ -48,7 +49,7 @@ func (u *GetOneProductWithSpecificationsByPublicId) Execute(input dto.GetOneProd
 		return output, nil
 	}
 
-	specificationValuesMap := make(map[int64]*entity.ProductSpecificationValue)
+	specificationValuesMap := make(map[types.SpecificationID]*entity.ProductSpecificationValue)
 
 	for _, productSpecVal := range productAggregate.Product.SpecificationValues {
 		specificationValuesMap[productSpecVal.SpecificationID] = productSpecVal
