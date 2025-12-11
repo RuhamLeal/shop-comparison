@@ -1,15 +1,16 @@
 package entity_test
 
 import (
+	domain_entity "project/internal/domain/entity"
 	"strings"
 	"testing"
-
-	domain_entity "project/internal/domain/entity"
 )
 
 func TestNewSpecificationGroup(t *testing.T) {
 	longName := strings.Repeat("a", 256)
-	longDescription := strings.Repeat("a", 2001)
+	maxName := strings.Repeat("a", 255)
+	longDescription := strings.Repeat("b", 2001)
+	maxDescription := strings.Repeat("b", 2000)
 
 	tests := []struct {
 		name        string
@@ -20,38 +21,51 @@ func TestNewSpecificationGroup(t *testing.T) {
 		{
 			name: "Should create a valid specification group",
 			props: domain_entity.SpecificationGroupProps{
-				ID:                1,
-				Name:              "Technical Specs",
-				Description:       "Detailed technical specifications",
-				TotalSpefications: 5,
+				ID:                  1,
+				PublicID:            "12345678",
+				Name:                "Hardware",
+				Description:         "Hardware specs",
+				TotalSpecifications: 10,
 			},
 			expectError: false,
 		},
 		{
-			name: "Should create specification group with specifications",
+			name: "Should create group with specifications list",
 			props: domain_entity.SpecificationGroupProps{
-				ID:                1,
-				Name:              "Dimensions",
-				TotalSpefications: 2,
+				ID:       2,
+				PublicID: "87654321",
+				Name:     "Display",
 				Specifications: []*domain_entity.Specification{
-					{ID: 1, Title: "Width", Content: "10cm"},
+					{ID: 1, Title: "Resolution"},
 				},
 			},
 			expectError: false,
 		},
 		{
-			name: "Should create specification group with ID 0",
+			name: "Should allow max length Name",
 			props: domain_entity.SpecificationGroupProps{
-				ID:   0,
-				Name: "General",
+				ID:       3,
+				PublicID: "valid-id",
+				Name:     maxName,
+			},
+			expectError: false,
+		},
+		{
+			name: "Should allow max length Description",
+			props: domain_entity.SpecificationGroupProps{
+				ID:          4,
+				PublicID:    "valid-id",
+				Name:        "Valid Name",
+				Description: maxDescription,
 			},
 			expectError: false,
 		},
 		{
 			name: "Should return error when ID is negative",
 			props: domain_entity.SpecificationGroupProps{
-				ID:   -1,
-				Name: "Valid Name",
+				ID:       -1,
+				PublicID: "valid-id",
+				Name:     "Valid Name",
 			},
 			expectError: true,
 			expectedMsg: "ID field cannot be less than 0",
@@ -59,8 +73,9 @@ func TestNewSpecificationGroup(t *testing.T) {
 		{
 			name: "Should return error when Name is empty",
 			props: domain_entity.SpecificationGroupProps{
-				ID:   1,
-				Name: "",
+				ID:       1,
+				PublicID: "valid-id",
+				Name:     "",
 			},
 			expectError: true,
 			expectedMsg: "Name cannot be empty",
@@ -68,8 +83,9 @@ func TestNewSpecificationGroup(t *testing.T) {
 		{
 			name: "Should return error when Name is too long",
 			props: domain_entity.SpecificationGroupProps{
-				ID:   1,
-				Name: longName,
+				ID:       1,
+				PublicID: "valid-id",
+				Name:     longName,
 			},
 			expectError: true,
 			expectedMsg: "Name cannot be longer than 255 characters",
@@ -78,11 +94,23 @@ func TestNewSpecificationGroup(t *testing.T) {
 			name: "Should return error when Description is too long",
 			props: domain_entity.SpecificationGroupProps{
 				ID:          1,
+				PublicID:    "valid-id",
 				Name:        "Valid Name",
 				Description: longDescription,
 			},
 			expectError: true,
 			expectedMsg: "Description cannot be longer than 2000 characters",
+		},
+		{
+			name: "Should return error when TotalSpecifications is negative",
+			props: domain_entity.SpecificationGroupProps{
+				ID:                  1,
+				PublicID:            "valid-id",
+				Name:                "Valid Name",
+				TotalSpecifications: -1,
+			},
+			expectError: true,
+			expectedMsg: "TotalSpecifications cannot be negative",
 		},
 	}
 
@@ -104,9 +132,16 @@ func TestNewSpecificationGroup(t *testing.T) {
 				}
 				if sg == nil {
 					t.Error("Expected specification group instance, but got nil")
+					return
 				}
-				if sg != nil && sg.Name != tt.props.Name {
+				if sg.Name != tt.props.Name {
 					t.Errorf("Expected name %s, got %s", tt.props.Name, sg.Name)
+				}
+				if sg.TotalSpecifications != tt.props.TotalSpecifications {
+					t.Errorf("Expected TotalSpecs %d, got %d", tt.props.TotalSpecifications, sg.TotalSpecifications)
+				}
+				if sg.PublicID == "" {
+					t.Error("Expected PublicID to be generated, got empty")
 				}
 			}
 		})
@@ -115,30 +150,32 @@ func TestNewSpecificationGroup(t *testing.T) {
 
 func TestSpecificationGroup_HasSpecifications(t *testing.T) {
 	tests := []struct {
-		name           string
-		specifications []*domain_entity.Specification
-		expected       bool
+		name     string
+		specs    []*domain_entity.Specification
+		expected bool
 	}{
 		{
-			name:           "Should return false when specifications list is nil",
-			specifications: nil,
-			expected:       false,
+			name:     "Should return false when specs list is nil",
+			specs:    nil,
+			expected: false,
 		},
 		{
-			name:           "Should return false when specifications list is empty",
-			specifications: []*domain_entity.Specification{},
-			expected:       false,
+			name:     "Should return false when specs list is empty",
+			specs:    []*domain_entity.Specification{},
+			expected: false,
 		},
 		{
-			name:           "Should return true when specifications list has items",
-			specifications: []*domain_entity.Specification{{ID: 1, Title: "Test", Content: "Test"}},
-			expected:       true,
+			name:     "Should return true when specs list has items",
+			specs:    []*domain_entity.Specification{{ID: 1, Title: "Spec 1"}},
+			expected: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sg := &domain_entity.SpecificationGroup{Specifications: tt.specifications}
+			sg := &domain_entity.SpecificationGroup{
+				Specifications: tt.specs,
+			}
 			if got := sg.HasSpecifications(); got != tt.expected {
 				t.Errorf("HasSpecifications() = %v, want %v", got, tt.expected)
 			}
