@@ -56,23 +56,23 @@ sqlc:
 	@echo "\n🟢 Queries and models generated gracefully using sqlc"
 
 create-migration:
-	@GOOSE_DRIVER=$(dbDriver) GOOSE_DBSTRING=${GOOSE_DB_DSN} goose -dir=$(migrationPath) create $(name) sql
+	@GOOSE_DRIVER=$(dbDriver) GOOSE_DBSTRING=${SQLITE_PATH} goose -dir=$(migrationPath) create $(name) sql
 	@echo "🟢 Migration file created gracefully"
 
 migration-up:
 	@echo "\n🟠 Starting process to run pending migrations"
-	@goose $(dbDriver) ${GOOSE_DB_DSN} -dir=$(migrationPath) up
+	@goose $(dbDriver) ${SQLITE_PATH} -dir=$(migrationPath) up
 	@echo "🟢 Process to run pending migrations done gracefully"
 
 migration-down:
-	@goose $(dbDriver) ${GOOSE_DB_DSN} -dir=$(migrationPath) down
+	@goose $(dbDriver) ${SQLITE_PATH} -dir=$(migrationPath) down
 
 migration-reset:
-	@goose $(dbDriver) ${GOOSE_DB_DSN} -dir=$(migrationPath) reset
+	@goose $(dbDriver) ${SQLITE_PATH} -dir=$(migrationPath) reset
 
 migration-rollback:
 	@echo "\n🟠 Starting process to run migrations rollback"
-	@goose $(dbDriver) ${GOOSE_DB_DSN} -dir=$(migrationPath) down-to 0
+	@goose $(dbDriver) ${SQLITE_PATH} -dir=$(migrationPath) down-to 0
 	@echo "🟢 Process to run migrations rollback done gracefully"
 
 swag:
