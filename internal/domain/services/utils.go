@@ -3,6 +3,7 @@ package services
 import (
 	"crypto/rand"
 	"fmt"
+	"strings"
 )
 
 var defaultAlphabet = []rune("0123456789abcdef")
@@ -42,4 +43,33 @@ func newNanoID(size int) (string, error) {
 	}
 
 	return string(id[:size]), nil
+}
+
+func FormatCentsToBRL(cents int64) string {
+	var brl int64
+	if cents < 0 {
+		brl = -cents / 100
+	} else {
+		brl = cents / 100
+	}
+
+	s := fmt.Sprintf("%d", brl)
+
+	var b strings.Builder
+	count := 0
+	for i := len(s) - 1; i >= 0; i-- {
+		if count == 3 {
+			b.WriteByte('.')
+			count = 0
+		}
+		b.WriteByte(s[i])
+		count++
+	}
+
+	bytes := []byte(b.String())
+	for i, j := 0, len(bytes)-1; i < j; i, j = i+1, j-1 {
+		bytes[i], bytes[j] = bytes[j], bytes[i]
+	}
+
+	return fmt.Sprintf("R$ %s,%02d", string(bytes), cents%100)
 }
