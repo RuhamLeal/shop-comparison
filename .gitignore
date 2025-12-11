@@ -1,9 +1,17 @@
+# Dependencies
+vendor
+
 result.xml
 
 /build
 /tmp
+/bin
 /docs
 
+
+/internal/infra/sqlite/db.go
+/internal/infra/sqlite/models.go
+/internal/infra/sqlite/*.sql.go
 
 internal/infra/sqlite/base.db
 
