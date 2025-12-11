@@ -3,6 +3,7 @@ module project
 go 1.25.0
 
 require (
+	github.com/Flussen/swagger-fiber-v3 v1.0.1
 	github.com/goccy/go-json v0.10.0
 	github.com/gofiber/fiber/v3 v3.0.0-rc.3
 	github.com/joho/godotenv v1.5.1
